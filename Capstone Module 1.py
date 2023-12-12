@@ -97,7 +97,7 @@ while True:
                     except:
                         print("Input Yang Dimasukan Salah")
             elif menu_1 == 3:
-                print('Sorting Data Pasien berdasarkan :\n1. Nama Karyawan (A - Z)\n2. Nama Karyawan (Z - A)')
+                print('Sorting Data Karyawan berdasarkan :\n1. Nama Karyawan (A - Z)\n2. Nama Karyawan (Z - A)')
                 menu_sorting = int(input("Masukkan Pilihan Menu Sorting : "))
                 if menu_sorting == 1 : #Sorting berdasarkan Nama Pasien (A - Z)
                     sorting_nama()

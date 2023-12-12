@@ -99,9 +99,9 @@ while True:
             elif menu_1 == 3:
                 print('Sorting Data Karyawan berdasarkan :\n1. Nama Karyawan (A - Z)\n2. Nama Karyawan (Z - A)')
                 menu_sorting = int(input("Masukkan Pilihan Menu Sorting : "))
-                if menu_sorting == 1 : #Sorting berdasarkan Nama Pasien (A - Z)
+                if menu_sorting == 1 : #Sorting berdasarkan Nama Karyawan (A - Z)
                     sorting_nama()
-                elif menu_sorting == 2:#Sorting berdasarkan Nama Pasien (Z - A)
+                elif menu_sorting == 2:#Sorting berdasarkan Nama Karyawan (Z - A)
                     sorting_nama(reverse=True)        
                 
         # menu 2: Menambah data karyawan

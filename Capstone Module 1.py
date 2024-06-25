@@ -6,19 +6,26 @@ data_karyawan = [
     {'ID Karyawan': 2023120001, 'Nama': 'Hafidz diya purwadhika', 'NIK': 202310225024, 'Jenis Kelamin': 'L', 'No Telepon': '081234567890', 'Tanggal Mulai Bekerja': '2023-01-01', 'Jabatan': 'CEO', 'Gaji Pokok': 16000000, 'Tunjangan Jabatan': 10000000},
     {'ID Karyawan': 2023120002, 'Nama': 'Erik Federick', 'NIK': 202310225023, 'Jenis Kelamin': 'L', 'No Telepon': '081234567891', 'Tanggal Mulai Bekerja': '2023-01-02', 'Jabatan': 'Data Analyst', 'Gaji Pokok': 8500000, 'Tunjangan Jabatan': 1500000}
 ]
-# Fungsi untuk menampilkan data karyawan
-def tampil_data() :
-    print("\nData Karyawan :")
-    headersK = data_karyawan[0].keys()
-    dataK = [k.values() for k in data_karyawan]
-    print(tabulate(dataK,headersK, tablefmt="grid"))
 
-def sorting_nama(reverse = False):
-    sorted_data = sorted(data_karyawan, key=lambda x: x['Nama'], reverse = reverse)
-    print("\nData Karyawan Diurutkan Berdasarkan Nama:")
-    headersK = sorted_data[0].keys()
-    dataK = [k.values() for k in sorted_data]
-    print(tabulate(dataK, headersK, tablefmt="grid"))
+# Fungsi untuk menampilkan data karyawan
+def tampil_data():
+    if not data_karyawan:
+        print("\nTidak Ada Data Karyawan")
+    else:
+        print("\nData Karyawan:")
+        headersK = data_karyawan[0].keys()
+        dataK = [k.values() for k in data_karyawan]
+        print(tabulate(dataK, headersK, tablefmt="grid"))
+
+def sorting_nama(reverse=False):
+    if not data_karyawan:
+        print("\nTidak Ada Data Karyawan")
+    else:
+        sorted_data = sorted(data_karyawan, key=lambda x: x['Nama'], reverse=reverse)
+        print("\nData Karyawan Diurutkan Berdasarkan Nama:")
+        headersK = sorted_data[0].keys()
+        dataK = [k.values() for k in sorted_data]
+        print(tabulate(dataK, headersK, tablefmt="grid"))
 
 while True:
     try:
@@ -57,9 +64,8 @@ while True:
                     try:
                         id_karyawan = int(input("Masukan ID Karyawan (10 angka):"))
                         found = False
-
                         if len(str(id_karyawan)) == 10:
-                            for i in range (len(data_karyawan)):  # Mencari karyawan berdasarkan ID
+                            for i in range(len(data_karyawan)):  # Mencari karyawan berdasarkan ID
                                 if id_karyawan == data_karyawan[i]['ID Karyawan']:
                                     karyawan = data_karyawan[i]
                                     #Menampilkan detail karyawan jika ID ditemukan
@@ -72,8 +78,8 @@ while True:
                                     print(f"Gaji Pokok            : {karyawan['Gaji Pokok']}")
                                     print(f"Tunjangan Jabatan     : {karyawan['Tunjangan Jabatan']}")
                                     found = True
-                            
-                            if found ==  True :
+
+                            if found:
                                 while True:
                                     lanjut = input("Apakah Ingin Melanjutkan (ya/tidak): ").lower()
                                     if lanjut in ['ya']:
@@ -83,33 +89,31 @@ while True:
                                         tidak = False
                                         break
                                     else:
-                                        print("Input salah ,Masukkan ya/tidak.")
+                                        print("Input salah, Masukkan ya/tidak.")
 
                             if tidak == True:
-                                continue 
-                            
-                            elif tidak ==  False:
+                                continue
+                            elif tidak == False:
                                 break
-                    
+
                         else:
-                            print(f"NIK {id_karyawan} tidak ditemukan. Silahkan coba lagi.")
-      
+                            print(f"ID {id_karyawan} tidak ditemukan. Silahkan coba lagi.")
                     except:
                         print("Input Yang Dimasukan Salah")
             elif menu_1 == 3:
                 print('Sorting Data Karyawan berdasarkan :\n1. Nama Karyawan (A - Z)\n2. Nama Karyawan (Z - A)')
                 menu_sorting = int(input("Masukkan Pilihan Menu Sorting : "))
-                if menu_sorting == 1 : #Sorting berdasarkan Nama Karyawan (A - Z)
+                if menu_sorting == 1:  # Sorting berdasarkan Nama Karyawan (A - Z)
                     sorting_nama()
-                elif menu_sorting == 2:#Sorting berdasarkan Nama Karyawan (Z - A)
-                    sorting_nama(reverse=True)        
-                
+                elif menu_sorting == 2:  # Sorting berdasarkan Nama Karyawan (Z - A)
+                    sorting_nama(reverse=True)
+
         # menu 2: Menambah data karyawan
         elif menu == 2:
             # Input Data Baru Karyawan
             while True:
                 id_baru = input("Masukkan ID Karyawan (10 angka): ")
-                if len(id_baru) == 10 :
+                if len(id_baru) == 10:
                     id_tersedia = False
                     for i in range(len(data_karyawan)):
                         if id_baru == str(data_karyawan[i]['ID Karyawan']):
@@ -123,11 +127,14 @@ while True:
                     print("ID harus memiliki 10 Angka dan bukan Huruf.")
 
             while True:
-                nama = input("Masukkan Nama Karyawan (minimal 3 karakter): ")
-                if len(nama) >= 3:
+                nama = input("Masukkan Nama Karyawan : ")
+                if len(nama) >= 3 and nama.isalpha():
                     break
                 else:
-                    print("Nama harus memiliki minimal 3 karakter.")
+                    if len(nama) < 3:
+                        print("Nama harus memiliki minimal 3 karakter.")
+                    if not nama.isalpha():
+                        print("Nama tidak boleh mengandung angka.")
 
             while True:
                 try:
@@ -140,18 +147,17 @@ while True:
                     print("Masukan Angka")
 
             while True:
-                jenis_kelamin = input("Masukkan Jenis Kelamin Karyawan (L/P):  ")
+                jenis_kelamin = input("Masukkan Jenis Kelamin Karyawan (L/P):  ").lower()
                 if jenis_kelamin in ['l', 'p']:
                     jenis_kelamin = jenis_kelamin.upper()
                     break
-                    
                 else:
                     print("Input salah, harap masukan L/P ")
 
-            while True:    
+            while True:
                 no_telepon = input("Masukkan Nomor Telepon Karyawan: ")
                 if len(str(no_telepon)) >= 10:
-                        break
+                    break
                 else:
                     print("No Telepon harus memiliki minimal 10 digit.")
 
@@ -167,14 +173,14 @@ while True:
             while True:
                 gaji_input = input("Masukkan Gaji Karyawan :")
                 try:
-                    # Hilangkan koma dan spasi
+                    # Hilangkan koma dan titik
                     gaji_input = gaji_input.replace(',', '')
                     gaji_input = gaji_input.replace('.', '')
-                    
+
                     # Coba konversi ke integer
                     gaji = int(gaji_input)
                     break  # Hentikan loop jika berhasil dikonversi
-                except :
+                except:
                     print("Masukkan harus berupa angka. Silakan coba lagi.")
 
             while True:
@@ -183,36 +189,45 @@ while True:
                     # Hilangkan koma
                     tunjangan_jabatan = tunjangan_jabatan.replace(',', '')
                     tunjangan_jabatan = tunjangan_jabatan.replace('.', '')
-                    
+
                     # Coba konversi ke integer
                     tunjangan_jabatan = int(tunjangan_jabatan)
                     break  # Hentikan loop jika berhasil dikonversi
-                except :
+                except:
                     print("Masukkan harus berupa angka. Silakan coba lagi.")
 
             # Menambah data karyawan baru ke dalam list
             data_baru = {'ID Karyawan': int(id_baru), 'Nama': nama, 'NIK': nik, 'Jenis Kelamin': jenis_kelamin, 'No Telepon': no_telepon, 'Tanggal Mulai Bekerja': tanggal_mulai_bekerja, 'Jabatan': jabatan, 'Gaji Pokok': gaji, 'Tunjangan Jabatan': tunjangan_jabatan}
             data_karyawan.append(data_baru)
-             
+
             # Menampilkan data karyawan setelah penambahan
             tampil_data()
 
         elif menu == 3:
             while True:
                 try:
+                    if not data_karyawan:
+                        print("Tidak Ada Data Karyawan")
+                        break
+
                     # Menampilkan data karyawan
                     tampil_data()
                     # Input ID Karyawan yang mau dihapus
                     id_hapus = int(input("Masukkan ID Karyawan yang ingin dihapus : "))
                     if len(str(id_hapus)) == 10:
+                        found = False
                         for i in range(len(data_karyawan)):
-                            if data_karyawan[i]['ID Karyawan'] == id_hapus :
+                            if data_karyawan[i]['ID Karyawan'] == id_hapus:
                                 # Menghapus karyawan sesuai dengan dengan ID yang di masukan
                                 data_karyawan.pop(i)
+                                found = True
                                 break
+
+                        if not found:
+                            print("ID tidak ditemukan.")
                         break
                     else:
-                        print("ID harus memiliki minimal 10 digit")
+                        print("ID harus memiliki 10 digit")
 
                 except:
                     print("Masukan Angka")
@@ -221,18 +236,21 @@ while True:
             tampil_data()
 
         elif menu == 4:
+            if not data_karyawan:
+                print("Tidak Ada Data Karyawan")
+                continue
+
             tampil_data()
             while True:
                 try:
                     id_update = int(input("Masukkan ID Karyawan yang ingin diupdate : "))
-                    if len(str(id_update)) == 10 :
+                    if len(str(id_update)) == 10:
                         break
                     else:
                         print(f"ID {id_update} tidak ditemukan, silahkan coba lagi.")
                 except:
                     print("Input Yang Dimasukan Tidak Sesuai")
-                    
-                    
+
             ketemu = False
             for i in range(len(data_karyawan)):
                 if id_update == data_karyawan[i]['ID Karyawan']:
@@ -245,7 +263,7 @@ while True:
                                 break  # Keluar dari perulangan jika input valid
                             else:
                                 print("Masukkan angka 1, 2, 3, atau 4 saja.")
-                        except :
+                        except:
                             print("Input yang dimasukkan harus berupa angka.")
 
                     while True:
@@ -276,16 +294,15 @@ while True:
                                 data_karyawan[i]['Tunjangan Jabatan'] = tunjangan_baru
                                 print("Data Karyawan berhasil diupdate!")
                                 break
-                        except :
+                        except:
                             print("Input yang dimasukkan salah. Silakan coba lagi.")
-                
-                tampil_data()
-                ketemu = True
-                if ketemu == True :
+
+                    tampil_data()
+                    ketemu = True
                     break
 
         elif menu == 5:
             break
 
     except:
-        print("masukan angka") 
+        print("Masukkan angka yang valid")
